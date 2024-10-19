@@ -1,10 +1,9 @@
-import math
-
 class Cell():
+    CHARACTERS='0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZáéíóúñüÁÉÍÓÚÑÜ'
     def __init__(self, base):
         self.BASE: int = base
         self.ALLOWED: int = range(1,base**2+1)
-        self.possibleValues:set[int] = set()
+        self.possibleValues:set[int] = set(self.ALLOWED)
         self.value:int = None
         self.isLocked:bool = False
     
@@ -61,14 +60,16 @@ class Cell():
         output=''
         for col in range(self.BASE):
             for row in range(self.BASE):
-                if self.value is None:
+                if len(self.possibleValues)>0:
                     cell = col*self.BASE+row+1
                     if cell in self.possibleValues:
-                        output=output + f'{cell}'
+                        output=output + f'{self.CHARACTERS[cell]}'
                     else:
                         output=output+' '
+                elif self.value is not None:
+                    output = output + f'{self.CHARACTERS[self.value]}'
                 else:
-                    output = output + f'{self.value}'
+                    output = output + ' '
             output = output + '\n'
         return output
         
