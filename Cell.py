@@ -2,11 +2,11 @@ import math
 
 class Cell():
     def __init__(self, base):
+        self.BASE: int = base
+        self.ALLOWED: int = range(1,base**2+1)
         self.possibleValues:set[int] = set()
         self.value:int = None
         self.isLocked:bool = False
-        self.BASE: int = base
-        self.ALLOWED: int = range(1,base**2+1)
     
     def get_value(self) -> int | None:
         return self.value
@@ -75,13 +75,3 @@ class Cell():
 class CellBase3(Cell):
     def __init__(self):
         super(CellBase3, self).__init__(3)
-
-
-cell = Cell(3)
-cell.add_possible(3)
-
-print(cell)
-
-cell.value = 4
-
-print(cell)
