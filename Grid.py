@@ -9,8 +9,11 @@ class Grid():
 
     def get_sector(self, sector):
         # get sector position
-        sectorRow = sector//self.BASE - 1
-        sectorCol = sector%self.BASE - 1
+        sectorRow = sector//self.BASE
+        sectorCol = sector%self.BASE
+        rowStartCoord = sectorRow*self.BASE
+        colStartCoord = sectorCol*self.BASE
+        return self.grid[rowStartCoord:rowStartCoord+self.BASE,colStartCoord:colStartCoord+self.BASE]
 
     
     def get_row(self, row:int):
@@ -25,13 +28,12 @@ class Grid():
     
     
     
-    
-    
-    
     def __str__(self):
         for i in self.DOMAIN:
             for cell in self.get_row(i):
                 pass
 
 
-print(Grid(3).get_row(1))
+# print(Grid(3).get_row(1))
+for i in range(16):
+    print(Grid(4).get_sector(i))
