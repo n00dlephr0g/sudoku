@@ -1,28 +1,19 @@
 #include <stdio.h>
-#include <stdlib.h>
 
-struct cell
+char* get_file_name()
 {
-    int trueValue;
-};
-
-struct puzzle
-{
-    struct cell cells[9][9];
-};
-
-char ** get_filename()
-{
-    char** filename = malloc(256 * sizeof(filename));
-    printf("enter puzzle file:\n");
+    char *filename[50];
+    printf("enter puzzle file");
     scanf("%s", filename);
+    filename = malloc(3 * sizeof(filename));
     return filename;
 }
 
-int read_puzzle()
+int ** read_puzzle()
 {
-    FILE* filePointer;
+    FILE *filePointer;
     return 0;
 }
+
 
 
