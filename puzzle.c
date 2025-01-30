@@ -1,59 +1,27 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-struct Cell
+struct cell
 {
-    //the original value
-    char trueValue;
-    //possible values marked by player
-    char markings[9];
-    //the answer of the player
-    char answer;
+    int trueValue;
 };
 
-struct Puzzle
+struct puzzle
 {
-    struct Cell cells[9][9];
+    struct cell cells[9][9];
 };
 
 char ** get_filename()
 {
-    //define variable
-    char** filenamePointer = malloc(256 * sizeof(filename));
-    //get user input
+    char** filename = malloc(256 * sizeof(filename));
     printf("enter puzzle file:\n");
-    scanf("%s", filenamePointer);
-    //return pointer
-    return filenamePointer;
+    scanf("%s", filename);
+    return filename;
 }
 
-int read_puzzle(struct Puzzle puzzle)
+int read_puzzle()
 {
-    //define variables
-    FILE* file;
-    char** filenamePointer;
-    char* filename;
-    
-
-    //get filename
-    filenamePointer = get_filename();
-    sprintf(filename, "%s", filenamePointer);
-    free(filenamePointer);
-
-    //open file
-    file = fopen(filename, "r");
-    if (file == NULL)
-    {
-        return 1;
-    }
-
-    //read and parce file
-    
-
-    //close file
-    fclose(file);
-
-
+    FILE* filePointer;
     return 0;
 }
 
