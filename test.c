@@ -3,6 +3,6 @@
 
 int main()
 {
-    
+    struct Puzzle puzzle;
     return 0;
 }
