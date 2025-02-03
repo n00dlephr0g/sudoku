@@ -1,13 +1,9 @@
-#include "puzzle.c"
 #include <stdio.h>
+#include "puzzle.c"
 
 int main()
 {
-    char** filenamePointer;
-    char* filename;
-    filenamePointer = get_filename();
-    sprintf(filename, "%s", filenamePointer);
-    free(filenamePointer);
-    printf("%s\n", filename);
+    struct Puzzle puzzle;
+    read_puzzle(&puzzle);
     return 0;
 }
