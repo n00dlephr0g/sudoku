@@ -59,7 +59,7 @@ int read_puzzle(struct Puzzle* puzzle)
                 int row = x;
                 int col = intInLine;
                 int value = item - '0';
-                    set_trueValue(puzzle, value, row, col);
+                //set_trueValue(puzzle, value, row, col);
                 // printf("%c", item);
             }
             if (intInLine==9) {break;}

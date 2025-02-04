@@ -1,4 +1,8 @@
 #include <stdio.h>
+#include <string.h>
+
+const int W = 7;
+const int H = 3;
 
 void clear() {
     printf("\033[2J");
@@ -10,39 +14,73 @@ void move(int x, int y) {
 }
 
 
-void draw_box(int x, int y, char horizontal, char vertical, char corner)
+void draw_num(int x, int y, int value) {
+    move(x+(W%2), y+(H%2));
+    printf("%d", value);
+}
+
+void draw_line(int x, int y, int len, char centre, char edge)
 {
     move(x,y);
-    printf("%c%c%c%c%c%c%c", corner, horizontal, horizontal, horizontal, horizontal, horizontal, corner);
-    move(x,y+1);
-    printf("%c     %c", vertical, vertical);
-    move(x,y+2);
-    printf("%c%c%c%c%c%c%c", corner, horizontal, horizontal, horizontal, horizontal, horizontal, corner);
+    printf("%c",edge);
+    for (int e=1;e<len;e++)
+    {
+        move(x+e,y);
+        printf("%c",centre);
+    }
+    move(x+len-1,y);
+    printf("%c",edge);
+}
+
+void draw_box(int x, int y, int w, int h, char horizontal, char vertical, char corner)
+{
+    draw_line(x, y, w, horizontal, corner);
+    for (int j = 1; j < h-1;j++)
+    {
+        draw_line(x, y+j, w, ' ', vertical);
+    }
+    draw_line(x, y+h-1, w, horizontal, corner);
 }
 
 
-void draw_thin_square(int x, int y) 
+void draw_box_standard(int x, int y, int w, int h)
+{
+    draw_box(x,y,w,h,'-','|','+');
+}
+
+
+void draw_box_thick(int x, int y, int w, int h)
+{
+    draw_box(x,y,w,h,'=','#','@');
+}
+
+
+void draw_cell(int x, int y) 
 {
     char h = '-';
     char v = '|';
     char c = '+';
-    draw_box(x, y, h, v, c);
+    draw_box(x, y, W, H, h, v, c);
 }
 
 
-void draw_thick_square(int x, int y)
+void draw_selected(int x, int y)
 {
-    
+    char h = '=';
+    char v = '#';
+    char c = '@';
+    draw_box(x, y, W, H, h, v, c);
 }
 
 
-void draw_grid(int x, int y)
+void draw_grid(int x, int y, int size)
 {
-    for (int j = y; j < y+9; j++)
+    for (int j = 0; j < size; j++)
     {
-        for (int i = y; i < x+9; i++)
+        for (int i = 0; i < size; i++)
         {
-            draw_thin_square(i*6,j*2);
+            // printf("coord: (%d, %d)\n", i*6, j*2);
+            draw_cell((i*(W-1))+x,(j*(H-1))+y);
         }
     }
 }
