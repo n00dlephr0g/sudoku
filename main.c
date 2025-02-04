@@ -12,23 +12,21 @@ int main()
 {
     // initialise variables
     int gameOver = 0;
-    int mainGrid = 0;
-    int cellGrid = 0;
+    int gridSelection = 0; //0: main, 1: marking ,2: answer
+    int xpos = 0;
+    int ypos = 0;
     
 
 
     //setup stage
     enter_input_mode();
-    // clear();
-    // draw_grid(0,0,9);
-    // draw_grid(60, 0, 3);
-    
+    clear();
     // main loop
-    while (1)
+    while (gameOver==0)
     {
-        //char input = get_key();
-        char input = getchar();
-        printf("%d\n", (int)input);
+        draw_stage();
+
+        char input = get_key();
     }
 
 

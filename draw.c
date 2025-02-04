@@ -85,3 +85,12 @@ void draw_grid(int x, int y, int size)
     }
 }
 
+
+void draw_stage()
+{
+    draw_box_standard(0,0,85,25);
+    draw_grid(3,1,9);
+    draw_grid(63,1,3);
+}
+
+
