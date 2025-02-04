@@ -39,7 +39,13 @@ int read_puzzle(struct Puzzle* puzzle)
     }
 
     //read and parce file
-    
+    //read 9 lines
+    for (int x = 0; x=9; x++)
+    {
+        char line[9];
+        fgets(line, 9, file);
+        prinft(line);
+    }
 
     //close file
     fclose(file);

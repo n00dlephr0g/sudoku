@@ -1,5 +1,5 @@
 #include <stdio.h>
-#include "puzzle.c"
+#include "puzzle.h"
 
 int main()
 {
