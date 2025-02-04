@@ -1,24 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <ctype.h>
 #include "puzzle.h"
-
-int get_filename(char* stdinBuffer)
-{
-    //get user input
-    printf("enter puzzle file:\n");
-    if (fgets(stdinBuffer, sizeof(stdinBuffer), stdin) == NULL)
-    {
-        printf("Error reading input.\n");
-        return 1;
-    }
-    size_t len = strlen(stdinBuffer);
-    if (len > 0 && stdinBuffer[len - 1] == '\n') {
-        stdinBuffer[len - 1] = '\0';
-    }
-
-    return 0;
-}
 
 int read_puzzle(struct Puzzle* puzzle)
 {
@@ -26,11 +10,23 @@ int read_puzzle(struct Puzzle* puzzle)
     FILE* file;
     char filename[1024];
 
+
     //get filename
-    if (get_filename(filename) > 0) {
+    printf("enter puzzle file:\n");
+    if (fgets(filename, 1024, stdin) == NULL)
+    {
+        printf("Error reading input.\n");
         return 1;
     }
+    size_t len = strlen(filename);
+    if (len > 0 && filename[len - 1] == '\n') {
+        filename[len - 1] = '\0';
+    }
 
+
+
+
+    printf(filename);
     //open file
     file = fopen(filename, "r");
     if (file == NULL)
@@ -40,11 +36,9 @@ int read_puzzle(struct Puzzle* puzzle)
 
     //read and parce file
     //read 9 lines
-    for (int x = 0; x=9; x++)
+    for (int x = 0; x<10; x++)
     {
-        char line[9];
-        fgets(line, 9, file);
-        prinft(line);
+        continue;
     }
 
     //close file

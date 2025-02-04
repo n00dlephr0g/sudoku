@@ -1,5 +1,5 @@
-#include "puzzle.c"
-#include "parcer.c"
+#include "puzzle.h"
+#include "parser.c"
 #include <stdio.h>
 
 int main()
