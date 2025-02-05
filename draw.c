@@ -85,12 +85,20 @@ void draw_cell(int x, int y)
 }
 
 
-void draw_selected(int x, int y)
+void draw_cell_thick(int x, int y)
 {
     char h = '=';
     char v = '#';
     char c = '@';
     draw_box(x, y, W, H, h, v, c);
+}
+
+
+void draw_selected(int x, int y)
+{
+    set_format(FG_GREEN);
+    draw_cell_thick(x, y);
+    reset_format();
 }
 
 

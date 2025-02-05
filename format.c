@@ -29,9 +29,16 @@
 #define BG_CYAN 46
 
 
+
 void set_format(int code)
 {
     printf("\e[%dm", code);
+}
+
+
+void reset_format()
+{
+    set_format(RESET);
 }
 
 

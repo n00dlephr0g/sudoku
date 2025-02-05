@@ -13,7 +13,7 @@
 #define MARK_OFFSET_X 59
 #define MARK_OFFSET_Y 1
 #define ANS_OFFSET_X MARK_OFFSET_X
-#define ANS_OFFSET_Y 10
+#define ANS_OFFSET_Y 8
 
 
 struct Game
@@ -75,12 +75,17 @@ void init_game(struct Game* game)
 void draw_stage()
 {
     //outline
+    set_format(BRIGHT);
     draw_box_standard(0,0,80,21);
+    set_format(RESET);
     //look grid
     draw_grid(LOOK_OFFSET_X,1,9);
     //markings grid
     draw_grid(MARK_OFFSET_X,MARK_OFFSET_Y,3);
     //answer box
+    set_format(FG_BLUE);
+    draw_cell_thick(ANS_OFFSET_X,ANS_OFFSET_Y);
+    reset_format();
     //move to bottom
     move_cursor(0,21);
 }
