@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <termios.h>
 #include <unistd.h>
+#include <ctype.h>
 
 struct termios tty;
 
@@ -47,7 +48,7 @@ char get_action()
     l: left
     */
     int c = getchar();
-    if (48<=c<=57)
+    if (isdigit(c))
     {
         return (char)c;
     }
@@ -56,7 +57,7 @@ char get_action()
     case 10: //enter
         return 's';
     case 101: //e
-        return 's';
+        return 'e';
     case 127: //backspace
         return 'd';
     case 99: //c

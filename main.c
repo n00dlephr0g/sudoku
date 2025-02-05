@@ -9,20 +9,21 @@
 
 int main()
 {
-    // initialise variables
+    // initialise
     int gameOver = 0;
-    
-
+    struct Game* game;
 
     //setup stage
-    enter_input_mode();
     clear();
+    enter_input_mode();
     move_cursor(0,22);
+    init_game(game);
 
     // main loop
     while (gameOver==0)
     {
         char input = get_action();
+        draw_char(0,0,input);
     }
 
 

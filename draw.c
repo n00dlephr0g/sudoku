@@ -19,9 +19,9 @@ void move_cursor(int x, int y) {
 }
 
 
-void draw_num(int x, int y, int value) {
-    move_cursor(x+(W%2), y+(H%2));
-    printf("%d", value);
+void draw_char(int x, int y, char c) {
+    move_cursor(x, y);
+    printf("%c", c);
 }
 
 void draw_line(int x, int y, int len, char centre, char edge)
@@ -92,12 +92,5 @@ void draw_grid(int x, int y, int size)
     }
 }
 
-
-void draw_stage()
-{
-    draw_box_standard(0,0,85,25);
-    draw_grid(3,1,9);
-    draw_grid(63,1,3);
-}
 
 

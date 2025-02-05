@@ -37,8 +37,14 @@ void set_format(int code)
 
 void set_formats(int* codes, int len)
 {
+    char codeStr[1024] = "\033[";
+    char buffer[64];
     for (int i = 0; i < len; i++)
     {
-        set_format(codes[i]);
+        sprintf(buffer, "%d;", codes[i]);
+        strcat(codeStr, buffer);
     }
+    size_t strLen = strlen(codeStr);
+    codeStr[strLen-1] = 'm';
+    printf(codeStr);
 }
