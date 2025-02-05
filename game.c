@@ -15,8 +15,9 @@
 
 struct Game
 {
-    //initial mode
+    // current game mode
     int mode;
+
     // x and y position in overview
     int xLook;
     int yLook;
@@ -25,6 +26,7 @@ struct Game
     int xMark;
     int yMark;
     
+    // initialise
     struct Puzzle puzzle;
 };
 
@@ -78,7 +80,6 @@ void draw_stage()
     //move to bottom
     move_cursor(0,21);
 }
-
 
 
 void step(struct Game* game, char input)
