@@ -5,8 +5,8 @@
 
 struct termios tty;
 
-void hide_cursor() {printf("\e[?25h");}
-void show_cursor() {printf("\e[?25l");}
+void hide_cursor() {printf("\033[?25h");}
+void show_cursor() {printf("\033[?25l");}
 
 void enter_input_mode() 
 {
@@ -86,9 +86,9 @@ char get_action()
             return ' ';
         }
     case 106: //j
-        return 'u';
-    case 107: //k
         return 'd';
+    case 107: //k
+        return 'u';
     case 108: //h
         return 'r';
     case 104: //l

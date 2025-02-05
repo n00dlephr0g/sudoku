@@ -4,96 +4,144 @@
 
 // define constants
 #define LOOK_MODE 0 // looking around main grid
-#define MARK_MODE 1 // marking cell
-#define EDIT_MODE 2 // editiing answer
+#define MARK_MODE 1 // marking selected
+#define EDIT_MODE 2 // editing answer
 
 // screen coordinates
-#define LOOK_OFFSET_X 3
-#define LOOK_OFFSET_Y 1
-#define MARK_OFFSET_X 59
-#define MARK_OFFSET_Y 1
-#define ANS_OFFSET_X MARK_OFFSET_X
-#define ANS_OFFSET_Y 8
+#define LOOK_X 3
+#define LOOK_Y 1
+#define MARK_X 59
+#define MARK_Y 1
+#define ANS_X MARK_X
+#define ANS_Y 8
 
 
 struct Game
 {
     // current game mode
     int mode;
+    int over;
 
     // x and y position in overview
-    int xLook;
-    int yLook;
-
-    // x and y position in marking
-    int xMark;
-    int yMark;
+    int x;
+    int y;
     
     // initialise
     struct Puzzle puzzle;
 };
 
 
-int mark_pos_to_index(int x, int y)
-{
-    return (y*3) + x;
-}
-
-
-void set_mode(struct Game* game, int modeNum)
-{
-    game->mode = modeNum;
-    return;
-}
-
-
-void set_look_pos(struct Game* game, int x, int y)
-{
-    game->xLook = x;
-    game->yLook = y;
-    return;
-}
-
-
-void set_mark_pos(struct Game* game, int x, int y)
-{
-    game->xMark = x;
-    game->yMark = y;
-    return;
-}
-
 
 void init_game(struct Game* game)
 {
-    set_mode(game, LOOK_MODE);
-    set_look_pos(game, 0, 0);
-    set_mark_pos(game, 0, 0);
+    game->mode = LOOK_MODE;
+    game->over = 0;
+    game->x = 0;
+    game->y = 0;
     return;
 }
 
 
-void draw_stage()
+void print_debug_line(struct Game* game)
+{
+    move_cursor(0,21);
+    printf
+    (
+        "mode {%d} | look {%d,%d}", 
+        game->mode,
+        game->x,
+        game->y
+    );
+}
+
+
+void debug_print(char* string)
+{
+    move_cursor(0,22);
+    printf(string);
+}
+
+
+
+void draw_stage(struct Game* game)
 {
     //outline
     set_format(BRIGHT);
     draw_box_standard(0,0,80,21);
     set_format(RESET);
     //look grid
-    draw_grid(LOOK_OFFSET_X,1,9);
+    draw_grid(LOOK_X,LOOK_Y,9);
     //markings grid
-    draw_grid(MARK_OFFSET_X,MARK_OFFSET_Y,3);
+    draw_grid(MARK_X,MARK_Y,3);
     //answer box
-    set_format(FG_BLUE);
-    draw_cell_thick(ANS_OFFSET_X,ANS_OFFSET_Y);
-    reset_format();
+    draw_cell(ANS_X,ANS_Y);
     //move to bottom
     move_cursor(0,21);
+    //debug line
+    print_debug_line(game);
 }
 
 
+void look(struct Game* game, char input)
+{
+    switch (input)
+    {
+        //movement
+        case 'u':
+            if (game->y > 0)
+            {
+                (game->y)--;
+            }
+            break;
+        case 'd':
+            if (game->y < 9)
+            {
+                (game->y)++;
+            }
+            break;
+        case 'r':
+            if (game->x < 9)
+            {
+                (game->x)++;
+            }
+            break;
+        case 'l':
+            if (game->x > 0)
+            {
+                (game->x)--;
+            }
+            break;
+
+        //enters
+        case 'e':
+        case '':
+        case '':
+    }
+}
+
+
+//main loop function
 void step(struct Game* game, char input)
 {
-    
+    //set mode
+    int mode = game->mode;
+    int moved = 0;
+    char string[100];
+    sprintf(string,"stepped %d", rand());
+    debug_print(string);
+
+    {
+        switch (mode)
+        {
+            case LOOK_MODE:
+            move(game, input);
+            break;
+
+        }
+    }
+
+
+    draw_stage(game);
 }
 
 

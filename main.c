@@ -16,14 +16,13 @@ int main()
     //setup stage
     clear();
     enter_input_mode();
-    move_cursor(0,22);
     init_game(game);
 
     // main loop
     while (gameOver==0)
     {
         char input = get_action();
-        draw_char(0,0,input);
+        step(game, input);
     }
 
 
