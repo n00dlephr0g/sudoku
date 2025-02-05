@@ -42,10 +42,12 @@ char get_action()
     b: back
     d: delete
     e: edit
+    c: colour
     u: up
     d: down
     r: right
     l: left
+    h: help
     */
     int c = getchar();
     if (isdigit(c))

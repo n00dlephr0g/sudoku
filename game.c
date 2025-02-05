@@ -1,5 +1,6 @@
 #include "puzzle.h"
 #include "draw.c"
+#include "menu.c"
 
 // define constants
 #define LOOK_MODE 0 // looking around main grid
@@ -9,8 +10,10 @@
 // screen coordinates
 #define LOOK_OFFSET_X 3
 #define LOOK_OFFSET_Y 1
-#define MARK_OFFSET_X 63
+#define MARK_OFFSET_X 59
 #define MARK_OFFSET_Y 1
+#define ANS_OFFSET_X MARK_OFFSET_X
+#define ANS_OFFSET_Y 10
 
 
 struct Game
@@ -72,11 +75,12 @@ void init_game(struct Game* game)
 void draw_stage()
 {
     //outline
-    draw_box_standard(0,0,85,21);
+    draw_box_standard(0,0,80,21);
     //look grid
     draw_grid(LOOK_OFFSET_X,1,9);
     //markings grid
     draw_grid(MARK_OFFSET_X,MARK_OFFSET_Y,3);
+    //answer box
     //move to bottom
     move_cursor(0,21);
 }

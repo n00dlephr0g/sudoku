@@ -24,27 +24,43 @@ void draw_char(int x, int y, char c) {
     printf("%c", c);
 }
 
-void draw_line(int x, int y, int len, char centre, char edge)
+
+void draw_horizontal_line(int x, int y, int l, char c)
 {
-    move_cursor(x,y);
-    printf("%c",edge);
-    for (int e=1;e<len;e++)
+    for (int i = x; i < x+l; i++)
     {
-        move_cursor(x+e,y);
-        printf("%c",centre);
+        draw_char(i,y,c);
     }
-    move_cursor(x+len-1,y);
-    printf("%c",edge);
 }
+
+
+void draw_vertical_line(int x, int y, int l, char c)
+{
+    for (int i = y; i < y+l; i++)
+    {
+        draw_char(x,i,c);
+    }
+}
+
 
 void draw_box(int x, int y, int w, int h, char horizontal, char vertical, char corner)
 {
-    draw_line(x, y, w, horizontal, corner);
-    for (int j = 1; j < h-1;j++)
-    {
-        draw_line(x, y+j, w, ' ', vertical);
-    }
-    draw_line(x, y+h-1, w, horizontal, corner);
+    int x2 = x+w-1;
+    int y2 = y+h-1;
+    //top line
+    draw_horizontal_line(x, y, w, horizontal);
+    //bottom line
+    draw_horizontal_line(x, y2, w, horizontal);
+    //left line
+    draw_vertical_line(x, y, h, vertical);
+    //right line
+    draw_vertical_line(x2, y, h, vertical);
+    // draw corners
+    draw_char(x, y, corner);
+    draw_char(x2, y, corner);
+    draw_char(x, y2, corner);
+    draw_char(x2, y2, corner);
+
 }
 
 
@@ -74,14 +90,13 @@ void draw_selected(int x, int y)
     char h = '=';
     char v = '#';
     char c = '@';
-    set_format(FG_GREEN);
     draw_box(x, y, W, H, h, v, c);
-    set_format(RESET);
 }
 
 
 void draw_grid(int x, int y, int size)
 {
+    int pixelSize = size*(W-1) + 1;
     for (int j = 0; j < size; j++)
     {
         for (int i = 0; i < size; i++)

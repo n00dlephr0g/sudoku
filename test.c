@@ -8,5 +8,6 @@
 
 
 int main() {
-    
+    clear();
+    draw_stage();
 }
