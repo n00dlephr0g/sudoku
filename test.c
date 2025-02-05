@@ -4,10 +4,13 @@
 #include <sys/ioctl.h>
 #include "terminal.c"
 #include "game.c"
+#include "parser.c"
+#include "puzzle.h"
 
 
 
 int main() {
     clear();
-    draw_stage();
+    struct Puzzle* puzzle;
+    read_puzzle(puzzle, "puzzles/real1.txt");
 }

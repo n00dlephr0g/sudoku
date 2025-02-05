@@ -5,7 +5,19 @@
 #include "puzzle.h"
 
 
+void init_puzzle(struct Puzzle* puzzle)
+{
+    for (int y = 0; y<9; y++)
+    {
+        char item;
+        for (int x = 0; x < 9; x++)
+        {
+            puzzle->cells[x][y].trueValue = 0;
+        }
+        printf("\n");
 
+    }
+}
 
 
 int read_puzzle(struct Puzzle* puzzle, char* filename)
@@ -21,24 +33,27 @@ int read_puzzle(struct Puzzle* puzzle, char* filename)
         return 2;
     }
 
-    //read and parce file
+    //initialise puzzle
+    init_puzzle(puzzle);
+    //read and parse file
     //read 9 lines
-    for (int x = 0; x<9; x++)
+    for (int y = 0; y<9; y++)
     {
         char item;
-        int y = 0;
-        while (fread(&item, 1, 1, file) > 0) 
+        for (int x = 0; x < 9; x++)
         {
-            if (isdigit(item))
+            fread(&item, 1, 1, file);
+            if (item =='\n') {break;}
+            if (isdigit(item)) 
             {
-                y++;
-                int value = item - '0';
-                //write to puzzle
-                puzzle->cells[x][y].trueValue = value;
+                puzzle->cells[x][y].trueValue = item;
             }
-            if (y==9) {break;}
+            else
+            {
+                puzzle->cells[x][y].trueValue = '0';
+            }
         }
-        // printf("\n");
+        printf("\n");
 
     }
 

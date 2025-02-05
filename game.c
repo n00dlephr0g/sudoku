@@ -55,10 +55,10 @@ void print_debug_line(struct Game* game)
 }
 
 
-void debug_print(char* string)
+void debug_print(char* debugStr)
 {
     move_cursor(0,22);
-    printf(string);
+    printf(debugStr);
 }
 
 
@@ -114,8 +114,7 @@ void look(struct Game* game, char input)
 
         //enters
         case 'e':
-        case '':
-        case '':
+        break;
     }
 }
 
@@ -127,14 +126,13 @@ void step(struct Game* game, char input)
     int mode = game->mode;
     int moved = 0;
     char string[100];
-    sprintf(string,"stepped %d", rand());
     debug_print(string);
 
     {
         switch (mode)
         {
             case LOOK_MODE:
-            move(game, input);
+            look(game, input);
             break;
 
         }
