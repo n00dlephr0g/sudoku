@@ -26,7 +26,8 @@ int main()
     {
         draw_stage();
 
-        char input = get_key();
+        char input = get_action();
+
     }
 
 
