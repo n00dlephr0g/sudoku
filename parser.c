@@ -14,8 +14,6 @@ void init_puzzle(struct Puzzle* puzzle)
         {
             puzzle->cells[x][y].trueValue = 0;
         }
-        printf("\n");
-
     }
 }
 
@@ -40,21 +38,21 @@ int read_puzzle(struct Puzzle* puzzle, char* filename)
     for (int y = 0; y<9; y++)
     {
         char item;
-        for (int x = 0; x < 9; x++)
+        for (int x = 0; x < 10; x++)
         {
-            fread(&item, 1, 1, file);
-            if (item =='\n') {break;}
-            if (isdigit(item)) 
+            int res = fread(&item, 1, 1, file);
+            if (item =='\n' || res < 1) {break;}
+            char value;
+            if (isdigit(item))
             {
-                puzzle->cells[x][y].trueValue = item;
+                value = item;
             }
             else
             {
-                puzzle->cells[x][y].trueValue = '0';
+                value = '0';
             }
+            puzzle->cells[x][y].trueValue = value;
         }
-        printf("\n");
-
     }
 
 

@@ -13,4 +13,7 @@ int main() {
     clear();
     struct Puzzle* puzzle;
     read_puzzle(puzzle, "puzzles/real1.txt");
+    draw_grid(LOOK_X,LOOK_Y,9);
+    draw_puzzle(puzzle);
+    move_cursor(0,21);
 }

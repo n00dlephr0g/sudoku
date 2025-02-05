@@ -17,6 +17,8 @@ int main()
     clear();
     enter_input_mode();
     init_game(game);
+    read_puzzle(&(game->puzzle),"puzzles/real1.txt");
+    draw_stage(game);
 
     // main loop
     while (gameOver==0)

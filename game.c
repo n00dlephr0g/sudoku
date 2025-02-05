@@ -62,6 +62,40 @@ void debug_print(char* debugStr)
 }
 
 
+int pixel_x(int coord)
+{
+    return LOOK_X + (W+1)/2 - 1 + coord * (W-1);
+}
+
+
+int pixel_y(int coord)
+{
+    return LOOK_Y + (H+1)/2 - 1 + coord * (H-1);
+}
+
+
+void draw_puzzle(struct Puzzle* puzzle)
+{
+    for (int j = 0; j < 9; j++)
+    {
+        char value;
+        for (int i = 0; i < 9; i++)
+        {
+            value = puzzle->cells[i][j].trueValue;
+            int x = pixel_x(i);
+            int y = pixel_y(j);
+            if ((int) value > 0)
+            {
+                draw_char(x,y, value);
+            }
+            else
+            {
+                draw_char(x,y,'x');
+            }
+        }
+    }
+}
+
 
 void draw_stage(struct Game* game)
 {
@@ -75,6 +109,8 @@ void draw_stage(struct Game* game)
     draw_grid(MARK_X,MARK_Y,3);
     //answer box
     draw_cell(ANS_X,ANS_Y);
+    //numbers
+    draw_puzzle(&(game->puzzle));
     //move to bottom
     move_cursor(0,21);
     //debug line
