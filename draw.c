@@ -1,34 +1,39 @@
 #include <stdio.h>
 #include <string.h>
+#include "ascii.c"
+#include "format.c"
 
-const int W = 7;
-const int H = 3;
+
+#define W 7
+#define H 3
+
 
 void clear() {
+    set_format(RESET);
     printf("\033[2J");
 }
 
 
-void move(int x, int y) {
+void move_cursor(int x, int y) {
     printf("\033[%d;%dH",y+1,x+1);
 }
 
 
 void draw_num(int x, int y, int value) {
-    move(x+(W%2), y+(H%2));
+    move_cursor(x+(W%2), y+(H%2));
     printf("%d", value);
 }
 
 void draw_line(int x, int y, int len, char centre, char edge)
 {
-    move(x,y);
+    move_cursor(x,y);
     printf("%c",edge);
     for (int e=1;e<len;e++)
     {
-        move(x+e,y);
+        move_cursor(x+e,y);
         printf("%c",centre);
     }
-    move(x+len-1,y);
+    move_cursor(x+len-1,y);
     printf("%c",edge);
 }
 
@@ -69,7 +74,9 @@ void draw_selected(int x, int y)
     char h = '=';
     char v = '#';
     char c = '@';
+    set_format(FG_GREEN);
     draw_box(x, y, W, H, h, v, c);
+    set_format(RESET);
 }
 
 

@@ -1,7 +1,7 @@
 #include "puzzle.h"
 #include "parser.c"
 #include "draw.c"
-#include "input.c"
+#include "terminal.c"
 #include <stdio.h>
 #include <termios.h>
 #include <unistd.h>

@@ -4,6 +4,9 @@
 
 struct termios tty;
 
+void hide_cursor() {printf("\e[?25h");}
+void show_cursor() {printf("\e[?25l");}
+
 void enter_input_mode() 
 {
     tcgetattr(STDIN_FILENO, &tty);
@@ -17,12 +20,16 @@ void enter_input_mode()
 
     tcsetattr(STDIN_FILENO, TCSANOW, &ntty);
 
+    hide_cursor();
+
     return;
 }
 
 void exit_input_mode()
 {
     tcsetattr(STDIN_FILENO, TCSANOW, &tty);
+
+    show_cursor();
 
     return;
 }
