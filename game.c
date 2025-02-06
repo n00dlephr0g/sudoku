@@ -62,15 +62,27 @@ void debug_print(char* debugStr)
 }
 
 
-int pixel_x(int coord)
+int centre_x(int coord)
 {
-    return LOOK_X + (W+1)/2 - 1 + coord * (W-1);
+    return LOOK_X + coord * (W-1) + (W+1)/2 - 1;
 }
 
 
-int pixel_y(int coord)
+int centre_y(int coord)
 {
-    return LOOK_Y + (H+1)/2 - 1 + coord * (H-1);
+    return LOOK_Y + coord * (H-1) + (H+1)/2 - 1;
+}
+
+
+int corner_x(int coord)
+{
+    return LOOK_X + coord * (W-1);
+}
+
+
+int corner_y(int coord)
+{
+    return LOOK_Y + coord * (H-1);
 }
 
 
@@ -82,8 +94,8 @@ void draw_puzzle(struct Puzzle* puzzle)
         for (int i = 0; i < 9; i++)
         {
             value = puzzle->cells[i][j].trueValue;
-            int x = pixel_x(i);
-            int y = pixel_y(j);
+            int x = centre_x(i);
+            int y = centre_y(j);
             if ((int) value > 0)
             {
                 draw_char(x,y, value);
@@ -97,24 +109,48 @@ void draw_puzzle(struct Puzzle* puzzle)
 }
 
 
+void draw_look_selected(int x, int y)
+{
+    draw_cell_thick(corner_x(x), corner_y(y));
+}
+
+
 void draw_stage(struct Game* game)
 {
+    //clear canvas
+    clear();
+
+    int mode = LOOK_MODE;
+
     //outline
     set_format(BRIGHT);
     draw_box_standard(0,0,80,21);
     set_format(RESET);
+
     //look grid
     draw_grid(LOOK_X,LOOK_Y,9);
+
     //markings grid
     draw_grid(MARK_X,MARK_Y,3);
+
     //answer box
     draw_cell(ANS_X,ANS_Y);
+
     //numbers
     draw_puzzle(&(game->puzzle));
+
+    //draw box and colour based on mode
+    if (mode == LOOK_MODE) {set_format(FG_GREEN);}
+    else {set_format(FG_BLUE);}
+    draw_look_selected(game->x,game->y);
+    reset_format();
+
     //move to bottom
     move_cursor(0,21);
+
     //debug line
     print_debug_line(game);
+
 }
 
 
@@ -130,13 +166,13 @@ void look(struct Game* game, char input)
             }
             break;
         case 'd':
-            if (game->y < 9)
+            if (game->y < 8)
             {
                 (game->y)++;
             }
             break;
         case 'r':
-            if (game->x < 9)
+            if (game->x < 8)
             {
                 (game->x)++;
             }

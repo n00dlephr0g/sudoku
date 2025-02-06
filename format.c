@@ -19,7 +19,7 @@
 #define FG_CYAN 36
 
 // background
-#define BG_DEFAUT 49
+#define BG_DEFAULT 49
 #define BG_BLACK 40
 #define BG_RED 41
 #define BG_GREEN 42

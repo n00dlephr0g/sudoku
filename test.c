@@ -11,9 +11,10 @@
 
 int main() {
     clear();
-    struct Puzzle* puzzle;
-    read_puzzle(puzzle, "puzzles/real1.txt");
-    draw_grid(LOOK_X,LOOK_Y,9);
-    draw_puzzle(puzzle);
-    move_cursor(0,21);
+    set_format(FG_BLUE);
+    draw_cell(0,0);
+    set_format(FG_RED);
+    draw_cell(10,0);
+    set_format(FG_GREEN);
+    draw_cell_thick(20,0);
 }
