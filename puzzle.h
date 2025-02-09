@@ -19,6 +19,5 @@ struct Puzzle
 };
 
 
-int set_trueValue(struct Puzzle* puzzle, int value, int row, int col);
 
 #endif

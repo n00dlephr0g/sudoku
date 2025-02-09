@@ -125,6 +125,22 @@ int corner_y(int coord)
 }
 
 
+int is_marked(struct Game* game)
+{
+    int x = game->x;
+    int y = game->y;
+    struct Cell cell = game->puzzle.cells[x][y];
+    for (int n = 0; n < 9; n++)
+    {
+        if (cell.markings[n] > 0)
+        {
+            return 1;
+        }
+    }
+    return 0;
+}
+
+
 void draw_puzzle(struct Game* game)
 {
     struct Puzzle puzzle = game->puzzle;
@@ -138,7 +154,7 @@ void draw_puzzle(struct Game* game)
             int y = look_centre_y(j);
             if (value == '0')
             {
-                if (cell.isMarked == 0 )
+                if (is_marked(game) == 0)
                 {
                     draw_char(x, y, ' ');
                 }
@@ -167,7 +183,10 @@ void draw_marking(struct Game* game)
         int j = n/3;
         int x = mark_centre_x(i);
         int y = mark_centre_y(j);
-        draw_char(x,y,(char)(n+1));
+        if (marking)
+        {
+            draw_char(x,y,'0'+(n+1));
+        }
     }
 }
 
@@ -257,12 +276,8 @@ void look(struct Game* game, char input)
 }
 
 
-void
-
-
 void mark(struct Game* game, char input)
 {
-    if isdigit
 }
 
 

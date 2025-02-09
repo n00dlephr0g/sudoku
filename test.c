@@ -7,12 +7,9 @@
 #include "parser.c"
 #include "puzzle.h"
 
-struct Puzzle* init_puzzle()
-{
-    return NULL;
-}
+
 
 int main() {
     clear();
-    
+    draw_char(1,1,(char)4);
 }
