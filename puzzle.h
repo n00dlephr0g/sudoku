@@ -7,8 +7,6 @@ struct Cell
     char trueValue;
     //possible values marked by player
     int markings[9];
-    // whether or not markings is empty
-    int isMarked;
     //the answer of the player
     char answer;
     //the actual answer

@@ -12,12 +12,10 @@ void init_puzzle(struct Puzzle* puzzle)
         char item;
         for (int x = 0; x < 9; x++)
         {
-            struct Cell cell = puzzle->cells[x][y];
-            cell.trueValue = 0;
-            cell.isMarked = 0;
+            puzzle->cells[x][y].trueValue = 0;
             for (int m = 0; m < 9; m++)
             {
-                cell.markings[m] = 0;
+                puzzle->cells[x][y].markings[m] = 0;
             }
         }
     }

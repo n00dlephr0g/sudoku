@@ -7,14 +7,12 @@
 #include "parser.c"
 #include "puzzle.h"
 
-
+struct Puzzle* init_puzzle()
+{
+    return NULL;
+}
 
 int main() {
     clear();
-    set_format(FG_BLUE);
-    draw_cell(0,0);
-    set_format(FG_RED);
-    draw_cell(10,0);
-    set_format(FG_GREEN);
-    draw_cell_thick(20,0);
+    
 }

@@ -62,6 +62,26 @@ void print_debug_line(struct Game* game)
 }
 
 
+void print_debug_line_markings(struct Game* game)
+{
+    move_cursor(0,22);
+    int* markings = game->puzzle.cells[game->x][game->y].markings;
+    printf
+    (
+        "%d %d %d %d %d %d %d %d %d ", 
+        markings[0],
+        markings[1],
+        markings[2],
+        markings[3],
+        markings[4],
+        markings[5],
+        markings[6],
+        markings[7],
+        markings[8]
+    );
+}
+
+
 void debug_print(char* debugStr)
 {
     move_cursor(0,22);
@@ -69,15 +89,27 @@ void debug_print(char* debugStr)
 }
 
 
-int centre_x(int coord)
+int look_centre_x(int coord)
 {
     return LOOK_X + coord * (W-1) + (W+1)/2 - 1;
 }
 
 
-int centre_y(int coord)
+int look_centre_y(int coord)
 {
     return LOOK_Y + coord * (H-1) + (H+1)/2 - 1;
+}
+
+
+int mark_centre_x(int coord)
+{
+    return MARK_X + coord * (W-1) + (W+1)/2 - 1;
+}
+
+
+int mark_centre_y(int coord)
+{
+    return MARK_Y + coord * (H-1) + (H+1)/2 - 1;
 }
 
 
@@ -102,8 +134,8 @@ void draw_puzzle(struct Game* game)
         {
             struct Cell cell = puzzle.cells[i][j];
             char value = cell.trueValue;
-            int x = centre_x(i);
-            int y = centre_y(j);
+            int x = look_centre_x(i);
+            int y = look_centre_y(j);
             if (value == '0')
             {
                 if (cell.isMarked == 0 )
@@ -127,6 +159,16 @@ void draw_puzzle(struct Game* game)
 void draw_marking(struct Game* game)
 {
     struct Puzzle puzzle = game->puzzle;
+    int* markings = puzzle.cells[game->x][game->y].markings;
+    for (int n = 0; n < 9; n++)
+    {
+        int marking = markings[n];
+        int i = n%3;
+        int j = n/3;
+        int x = mark_centre_x(i);
+        int y = mark_centre_y(j);
+        draw_char(x,y,(char)(n+1));
+    }
 }
 
 
@@ -158,7 +200,10 @@ void draw_stage(struct Game* game)
     draw_cell(ANS_X,ANS_Y);
 
     //numbers
-    draw_puzzle(&(game->puzzle));
+    draw_puzzle(game);
+
+    //pencil marks
+    draw_marking(game);
 
     //draw box and colour based on mode
     if (mode == LOOK_MODE) {set_format(FG_GREEN);}
@@ -171,6 +216,7 @@ void draw_stage(struct Game* game)
 
     //debug line
     print_debug_line(game);
+    print_debug_line_markings(game);
 
 }
 
@@ -208,6 +254,15 @@ void look(struct Game* game, char input)
         case 'e':
         break;
     }
+}
+
+
+void
+
+
+void mark(struct Game* game, char input)
+{
+    if isdigit
 }
 
 
