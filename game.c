@@ -1,3 +1,4 @@
+#include <ctype.h>
 #include "puzzle.h"
 #include "draw.c"
 #include "menu.c"
@@ -15,12 +16,18 @@
 #define ANS_X MARK_X
 #define ANS_Y 8
 
+const char EMPTY_MARK[9] = { 0 };
+
 
 struct Game
 {
     // current game mode
     int mode;
     int over;
+
+    // old coordinates
+    int xOld;
+    int yOld;
 
     // x and y position in overview
     int x;
@@ -86,26 +93,40 @@ int corner_y(int coord)
 }
 
 
-void draw_puzzle(struct Puzzle* puzzle)
+void draw_puzzle(struct Game* game)
 {
+    struct Puzzle puzzle = game->puzzle;
     for (int j = 0; j < 9; j++)
     {
-        char value;
         for (int i = 0; i < 9; i++)
         {
-            value = puzzle->cells[i][j].trueValue;
+            struct Cell cell = puzzle.cells[i][j];
+            char value = cell.trueValue;
             int x = centre_x(i);
             int y = centre_y(j);
-            if ((int) value > 0)
+            if (value == '0')
             {
-                draw_char(x,y, value);
+                if (cell.isMarked == 0 )
+                {
+                    draw_char(x, y, ' ');
+                }
+                else 
+                {
+                    draw_char(x, y, '*');
+                }
             }
             else
             {
-                draw_char(x,y,'x');
+                draw_char(x, y, value);
             }
         }
     }
+}
+
+
+void draw_marking(struct Game* game)
+{
+    struct Puzzle puzzle = game->puzzle;
 }
 
 
@@ -183,7 +204,6 @@ void look(struct Game* game, char input)
                 (game->x)--;
             }
             break;
-
         //enters
         case 'e':
         break;
