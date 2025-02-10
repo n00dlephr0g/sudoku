@@ -235,7 +235,7 @@ void draw_stage(struct Game* game)
 
     //debug line
     print_debug_line(game);
-    print_debug_line_markings(game);
+
 
 }
 
