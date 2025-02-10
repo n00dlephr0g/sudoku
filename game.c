@@ -17,6 +17,8 @@
 #define ANS_X MARK_X
 #define ANS_Y 8
 
+#define CURRENTCELL game->puzzle.cells[game->x][game->y]
+
 const char EMPTY_MARK[9] = { 0 };
 
 
@@ -57,7 +59,7 @@ void init_game(struct Game* game)
 void print_debug_line(struct Game* game, char input)
 {
     move_cursor(0,21);
-    struct Cell cell = game->puzzle.cells[game->x][game->y];
+    struct Cell cell = CURRENTCELL;
     printf
     (
         "mode {%d} | look {%d,%d} | key {%c}\ntrueValue {%c} | state {%d} | answer {%c}", 
@@ -75,7 +77,7 @@ void print_debug_line(struct Game* game, char input)
 void print_debug_line_markings(struct Game* game)
 {
     move_cursor(0,22);
-    int* markings = game->puzzle.cells[game->x][game->y].markings;
+    int* markings = CURRENTCELL.markings;
     printf
     (
         "%d %d %d %d %d %d %d %d %d ", 
@@ -175,21 +177,27 @@ void draw_puzzle(struct Game* game)
 
 void draw_marking(struct Game* game)
 {
-    struct Puzzle puzzle = game->puzzle;
-    int* markings = puzzle.cells[game->x][game->y].markings;
+    int* markings = CURRENTCELL.markings;
+
     for (int n = 0; n < 9; n++)
     {
+        char c;
         int marking = markings[n];
         int i = n%3;
         int j = n/3;
-        if (marking)
+        if (marking == 1)
         {
-            draw_char(
-                mark_centre_x(i),
-                mark_centre_y(j),
-                '0'+(n+1)
-            );
+            c = '0'+(n+1);
         }
+        else
+        {
+            c = ' ';
+        }
+        draw_char(
+            mark_centre_x(i),
+            mark_centre_y(j),
+            c
+        );
     }
 }
 
@@ -323,6 +331,11 @@ void look(struct Game* game, char input)
 
 void mark(struct Game* game, char input)
 {
+    if (isdigit(input))
+    {
+        int index = (int)(input - '1');
+        CURRENTCELL.markings[index] ^= 1;
+    }
     switch (input)
     {
         case 'b':
