@@ -22,6 +22,7 @@ const char EMPTY_MARK[9] = { 0 };
 struct Game
 {
     // current game mode
+    int modeOld;
     int mode;
     int over;
 
@@ -42,7 +43,10 @@ struct Game
 void init_game(struct Game* game)
 {
     game->mode = LOOK_MODE;
+    game->modeOld = LOOK_MODE;
     game->over = 0;
+    game->xOld = 0;
+    game->yOld = 0;
     game->x = 0;
     game->y = 0;
     return;
@@ -181,11 +185,13 @@ void draw_marking(struct Game* game)
         int marking = markings[n];
         int i = n%3;
         int j = n/3;
-        int x = mark_centre_x(i);
-        int y = mark_centre_y(j);
         if (marking)
         {
-            draw_char(x,y,'0'+(n+1));
+            draw_char(
+                mark_centre_x(i),
+                mark_centre_y(j),
+                '0'+(n+1)
+            );
         }
     }
 }
@@ -218,18 +224,6 @@ void draw_stage(struct Game* game)
     //answer box
     draw_cell(ANS_X,ANS_Y);
 
-    //numbers
-    draw_puzzle(game);
-
-    //pencil marks
-    draw_marking(game);
-
-    //draw box and colour based on mode
-    if (mode == LOOK_MODE) {set_format(FG_GREEN);}
-    else {set_format(FG_BLUE);}
-    draw_look_selected(game->x,game->y);
-    reset_format();
-
     //move to bottom
     move_cursor(0,21);
 
@@ -240,8 +234,55 @@ void draw_stage(struct Game* game)
 }
 
 
+void draw_update(struct Game* game)
+{
+    int mode = game->mode;
+    
+    //OVERRIDE OLD
+    draw_cell(
+        corner_x(game->xOld),
+        corner_y(game->yOld)
+    );
+
+
+    //DRAW UPDATE
+    //numbers
+    draw_puzzle(game);
+
+    //pencil marks
+    draw_marking(game);
+
+    //draw boxes
+    switch (mode)
+    {
+        case LOOK_MODE:
+            set_format(FG_GREEN);
+            draw_look_selected(game->x,game->y);
+            reset_format();
+            break;
+        case MARK_MODE:
+            set_format(FG_BLUE);
+            draw_look_selected(game->x,game->y);
+            reset_format();
+            break;
+        case EDIT_MODE:
+            set_format(FG_BLUE);
+            draw_look_selected(game->x,game->y);
+            set_format(FG_GREEN);
+            draw_cell_thick(ANS_X, ANS_Y);
+            reset_format();
+            break;
+    }
+
+
+    move_cursor(0,21);
+}
+
+
 void look(struct Game* game, char input)
 {
+    game->xOld = game->x;
+    game->yOld = game->y;
     switch (input)
     {
         //movement
@@ -269,39 +310,54 @@ void look(struct Game* game, char input)
                 (game->x)--;
             }
             break;
-        //enters
+        //edit
         case 'e':
-        break;
+            game->mode = MARK_MODE;
+            break;
+        case 's':
+            game->mode = EDIT_MODE;
+            break;
+        case 'b':
+            game->over = 1;
     }
 }
 
 
 void mark(struct Game* game, char input)
 {
+    switch (input)
+    {
+        case 'b':
+            game->mode = LOOK_MODE;
+    }
 }
 
 
 //main loop function
-void step(struct Game* game, char input)
+int step(struct Game* game, char input)
 {
     //set mode
     int mode = game->mode;
-    int moved = 0;
-    char string[100];
-    debug_print(string);
 
+    //execute function based on mode
+    switch (mode)
     {
-        switch (mode)
-        {
-            case LOOK_MODE:
+        case LOOK_MODE:
             look(game, input);
             break;
-
-        }
+        case MARK_MODE:
+            mark(game, input);
+            break;
     }
 
+    //exit if game over
+    if (game->over)
+    {
+        return 1;
+    }
 
-    draw_stage(game);
+    draw_update(game);
+    return 0;
 }
 
 

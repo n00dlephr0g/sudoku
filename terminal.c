@@ -41,7 +41,7 @@ char get_action()
     s: select
     b: back
     d: delete
-    e: edit
+    m: mark
     c: colour
     u: up
     d: down
@@ -50,20 +50,28 @@ char get_action()
     h: help
     */
     int c = getchar();
+    // return input if input is number
     if (isdigit(c))
     {
         return (char)c;
     }
+    // return appropriate char for recieved input
     switch (c)
     {
     case 10: //enter
         return 's';
+    case 115: //s
+        return 's';
     case 101: //e
-        return 'e';
+        return 'm';
+    case 109: //m
+        return 'm';
     case 127: //backspace
         return 'd';
     case 99: //c
         return 'd';
+    case 98: //b
+        return 'b';
     case 113: //q
         return 'b';
     case 27:
@@ -80,10 +88,6 @@ char get_action()
                 case 68:
                 return 'l';
             }
-        }
-        else
-        {
-            return ' ';
         }
     case 106: //j
         return 'd';

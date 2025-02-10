@@ -11,5 +11,10 @@
 
 int main() {
     clear();
-    draw_char(1,1,(char)4);
+    enter_input_mode();
+    while (1)
+    {
+        printf("%c\n",get_action());
+    }
+    exit_input_mode();
 }

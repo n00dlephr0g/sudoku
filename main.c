@@ -24,7 +24,9 @@ int main()
     while (gameOver==0)
     {
         char input = get_action();
-        step(game, input);
+        int end = step(game, input);
+        if (end)
+        {break;}
     }
 
 
