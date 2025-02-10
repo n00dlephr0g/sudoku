@@ -1,13 +1,11 @@
 #ifndef PUZZLE_H
 #define PUZZLE_H
 
-#define ORIGINAL 0
-#define UNANSWERED 1
-#define ANSWERED 2
+#define UNANSWERED 0
+#define ANSWERED 1
 
 struct Cell
 {
-    //cell type
     int state;
     //the original value
     char trueValue;

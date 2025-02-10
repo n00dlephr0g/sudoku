@@ -48,9 +48,8 @@ int read_puzzle(struct Puzzle* puzzle, char* filename)
             int res = fread(&item, 1, 1, file);
             if (item =='\n' || res < 1) {break;}
             char value;
-            if (isdigit(item))
+            if (isdigit(item) && item != 0)
             {
-                puzzle->cells[x][y].state = ORIGINAL;
                 value = item;
             }
             else

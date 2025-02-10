@@ -1,17 +1,23 @@
-#include <puzzle.h>
+#include "puzzle.h"
 
 
 
 char get_cell_value(struct Cell* cell)
 {
-    switch (cell->state)
+    if (cell->trueValue == '0') //has no initial value
     {
-        case ORIGINAL:
-            return cell.trueValue;
-        case ANSWERED:
-            return cell.answer;
-        default:
+        if (cell->state == ANSWERED)
+        {
+            return cell->answer;
+        }
+        else
+        {
             return ' ';
+        }
+    }
+    else
+    {
+        return cell->trueValue;
     }
 }
 

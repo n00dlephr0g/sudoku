@@ -57,13 +57,17 @@ void init_game(struct Game* game)
 void print_debug_line(struct Game* game, char input)
 {
     move_cursor(0,21);
+    struct Cell cell = game->puzzle.cells[game->x][game->y];
     printf
     (
-        "mode {%d} | look {%d,%d} | key {%c}", 
+        "mode {%d} | look {%d,%d} | key {%c}\ntrueValue {%c} | state {%d} | answer {%c}", 
         game->mode,
         game->x,
         game->y,
-        input
+        input,
+        cell.trueValue,
+        cell.state,
+        cell.answer
     );
 }
 
@@ -154,7 +158,7 @@ void draw_puzzle(struct Game* game)
             char value = get_cell_value(&cell);
 
             //draw based on type
-            if (cell.state == ORIGINAL)
+            if (cell.trueValue != '0')
             {
                 set_format(FG_YELLOW);
                 draw_char(x, y, value);
