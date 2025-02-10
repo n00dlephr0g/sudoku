@@ -12,6 +12,7 @@ void init_puzzle(struct Puzzle* puzzle)
         char item;
         for (int x = 0; x < 9; x++)
         {
+            puzzle->cells[x][y].state = UNANSWERED;
             puzzle->cells[x][y].trueValue = 0;
             for (int m = 0; m < 9; m++)
             {
@@ -49,6 +50,7 @@ int read_puzzle(struct Puzzle* puzzle, char* filename)
             char value;
             if (isdigit(item))
             {
+                puzzle->cells[x][y].state = ORIGINAL;
                 value = item;
             }
             else

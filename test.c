@@ -14,6 +14,7 @@ int main() {
     enter_input_mode();
     while (1)
     {
+        set_format(FG_CYAN);
         printf("%c\n",get_action());
     }
     exit_input_mode();

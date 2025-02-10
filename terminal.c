@@ -40,9 +40,8 @@ char get_action()
     /*
     s: select
     b: back
-    d: delete
+    c: clear
     m: mark
-    c: colour
     u: up
     d: down
     r: right
@@ -67,9 +66,9 @@ char get_action()
     case 109: //m
         return 'm';
     case 127: //backspace
-        return 'd';
+        return 'c';
     case 99: //c
-        return 'd';
+        return 'c';
     case 98: //b
         return 'b';
     case 113: //q

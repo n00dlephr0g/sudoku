@@ -2,6 +2,7 @@
 #include "puzzle.h"
 #include "draw.c"
 #include "menu.c"
+#include "logic.c"
 
 // define constants
 #define LOOK_MODE 0 // looking around main grid
@@ -53,15 +54,16 @@ void init_game(struct Game* game)
 }
 
 
-void print_debug_line(struct Game* game)
+void print_debug_line(struct Game* game, char input)
 {
     move_cursor(0,21);
     printf
     (
-        "mode {%d} | look {%d,%d}", 
+        "mode {%d} | look {%d,%d} | key {%c}", 
         game->mode,
         game->x,
-        game->y
+        game->y,
+        input
     );
 }
 
@@ -129,19 +131,10 @@ int corner_y(int coord)
 }
 
 
-int is_marked(struct Game* game)
+void draw_ans(struct Game* game)
 {
-    int x = game->x;
-    int y = game->y;
-    struct Cell cell = game->puzzle.cells[x][y];
-    for (int n = 0; n < 9; n++)
-    {
-        if (cell.markings[n] > 0)
-        {
-            return 1;
-        }
-    }
-    return 0;
+
+    draw_cell(ANS_X,ANS_Y);
 }
 
 
@@ -152,20 +145,20 @@ void draw_puzzle(struct Game* game)
     {
         for (int i = 0; i < 9; i++)
         {
-            struct Cell cell = puzzle.cells[i][j];
-            char value = cell.trueValue;
+            struct Cell cell = game->puzzle.cells[i][j];
+            //initialise coordinates
             int x = look_centre_x(i);
             int y = look_centre_y(j);
-            if (value == '0')
+
+            //initialise value
+            char value = get_cell_value(&cell);
+
+            //draw based on type
+            if (cell.state == ORIGINAL)
             {
-                if (is_marked(game) == 0)
-                {
-                    draw_char(x, y, ' ');
-                }
-                else 
-                {
-                    draw_char(x, y, '*');
-                }
+                set_format(FG_YELLOW);
+                draw_char(x, y, value);
+                reset_format();
             }
             else
             {
@@ -200,37 +193,6 @@ void draw_marking(struct Game* game)
 void draw_look_selected(int x, int y)
 {
     draw_cell_thick(corner_x(x), corner_y(y));
-}
-
-
-void draw_stage(struct Game* game)
-{
-    //clear canvas
-    clear();
-
-    int mode = LOOK_MODE;
-
-    //outline
-    set_format(BRIGHT);
-    draw_box_standard(0,0,80,21);
-    set_format(RESET);
-
-    //look grid
-    draw_grid(LOOK_X,LOOK_Y,9);
-
-    //markings grid
-    draw_grid(MARK_X,MARK_Y,3);
-
-    //answer box
-    draw_cell(ANS_X,ANS_Y);
-
-    //move to bottom
-    move_cursor(0,21);
-
-    //debug line
-    print_debug_line(game);
-
-
 }
 
 
@@ -279,6 +241,38 @@ void draw_update(struct Game* game)
 }
 
 
+void draw_stage(struct Game* game)
+{
+    //clear canvas
+    clear();
+
+    int mode = LOOK_MODE;
+
+    //outline
+    set_format(BRIGHT);
+    draw_box_standard(0,0,80,21);
+    set_format(RESET);
+
+    //look grid
+    draw_grid(LOOK_X,LOOK_Y,9);
+
+    //markings grid
+    draw_grid(MARK_X,MARK_Y,3);
+
+    //answer box
+    draw_cell(ANS_X,ANS_Y);
+
+    //move to bottom
+    move_cursor(0,21);
+
+    //numbers and markings
+    draw_update(game);
+    
+
+
+}
+
+
 void look(struct Game* game, char input)
 {
     game->xOld = game->x;
@@ -311,7 +305,7 @@ void look(struct Game* game, char input)
             }
             break;
         //edit
-        case 'e':
+        case 'm':
             game->mode = MARK_MODE;
             break;
         case 's':
@@ -357,6 +351,8 @@ int step(struct Game* game, char input)
     }
 
     draw_update(game);
+    //debug line
+    print_debug_line(game, input);
     return 0;
 }
 
