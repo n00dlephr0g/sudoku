@@ -331,17 +331,24 @@ void look(struct Game* game, char input)
 
 void mark(struct Game* game, char input)
 {
-    if (isdigit(input))
-    {
-        int index = (int)(input - '1');
-        CURRENTCELL.markings[index] ^= 1;
-    }
     switch (input)
     {
         case 'b':
             game->mode = LOOK_MODE;
     }
+    if (CURRENTCELL.trueValue != '0')
+    {
+        return;
+    }
+    if (isdigit(input))
+    {
+        int index = (int)(input - '1');
+        CURRENTCELL.markings[index] ^= 1;
+    }
 }
+
+
+void edit
 
 
 //main loop function
