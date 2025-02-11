@@ -348,7 +348,10 @@ void mark(struct Game* game, char input)
 }
 
 
-void edit
+void edit(struct Game* game, char input)
+{
+    
+}
 
 
 //main loop function
